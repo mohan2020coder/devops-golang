@@ -92,3 +92,50 @@ You can verify that Ansible is correctly reading the configuration and inventory
     This should show the hosts listed in your `/etc/ansible/hosts` file.
 
 Following these steps should ensure that Ansible is installed correctly and its configuration directory is set up properly.
+
+
+
+
+# Docker Installation Guide for Ubuntu
+
+This guide provides step-by-step instructions to install Docker on an Ubuntu system.
+
+## Prerequisites
+
+- Ubuntu system with `sudo` privileges.
+- Internet connectivity to download packages.
+
+# Docker Installation Guide for Ubuntu
+
+This guide provides step-by-step instructions to install Docker on an Ubuntu system.
+
+## Prerequisites
+
+- Ubuntu system with `sudo` privileges.
+- Internet connectivity to download packages.
+
+## Step-by-Step Installation
+
+```bash
+# 1. Install Required Packages
+sudo apt-get update && \
+sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common && \
+
+# 2. Add Docker's Official GPG Key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
+
+# 3. Set Up the Docker Repository
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
+
+# 4. Install Docker Engine
+sudo apt-get update && \
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io && \
+
+# 5. Verify Docker Installation
+sudo docker --version && \
+
+# 6. Start Docker Service
+sudo service docker start && \
+
+# 7. Test Docker
+sudo docker run hello-world
