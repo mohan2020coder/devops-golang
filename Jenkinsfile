@@ -13,7 +13,7 @@ pipeline {
         stage('Unit Test') {
             steps {
                 script {
-                    sh 'go mod init hello'
+                    sh 'go mod init https://github.com/mohan2020coder/devops-golang'
                     sh 'go test'
                 }
             }
