@@ -23,7 +23,7 @@ jobs:
     - name: Initialize Go module
       run: |
         if [ ! -f go.mod ]; then
-          go mod init your-module-name
+          go mod init https://github.com/mohan2020coder/devops-golang
         fi
         go mod tidy
 
