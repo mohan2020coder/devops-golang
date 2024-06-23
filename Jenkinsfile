@@ -58,17 +58,17 @@ pipeline {
        }
 
         stage('Push Docker Image') {
-           steps {
-               script {
-                   withCredentials([usernamePassword(credentialsId: 'DOCKER_REGISTRY_CREDENTIALS_ID', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                       sh """
-                           echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
-                           docker push monihub/hellogo
-                       """
-                   }
-               }
-           }
-       }
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'DOCKER_REGISTRY_CREDENTIALS_ID', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh '''
+                            echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
+                            docker push monihub/hellogo
+                        '''
+                    }
+                }
+            }
+        }
 
        // stage('Terraform Apply') {
        //      environment {
@@ -101,7 +101,7 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'sudo_password_id', variable: 'SUDO_PASSWORD')]) {
+                    withCredentials([string(credentialsId: 'SUDO_PASS_ID', variable: 'SUDO_PASSWORD')]) {
                         sh 'ansible-playbook ansible/deploy-container.yaml --extra-vars "ansible_become_pass=$SUDO_PASSWORD"'
                     }
                 }
