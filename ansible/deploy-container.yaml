@@ -2,14 +2,28 @@
 - name: Remove and Run Docker Container
   hosts: webservers
   become: yes
+  vars_files:
+    - ~/.ansible_vault
   tasks:
-    - name: Stop and remove existing container (if it exists)
-      command: docker stop helloapp
+    - name: Stop and remove existing container
+      docker_container:
+        name: helloapp
+        state: absent
+
+    - name: Remove all Docker images
+      shell: docker rmi $(docker images -q)
       ignore_errors: yes
 
-    - name: Stop and remove existing container (if it exists)
-      command: docker rmi $(docker image ls)
-      ignore_errors: yes
+    - name: Pull the latest image
+      docker_image:
+        name: monihub/hellogo
+        source: pull
 
     - name: Run a new container
-      command: docker run -itd -p 8080:8080 --name helloapp --rm monihub/hellogo
+      docker_container:
+        name: helloapp
+        image: monihub/hellogo
+        state: started
+        ports:
+          - "8080:8080"
+        restart_policy: unless-stopped
