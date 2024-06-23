@@ -7,6 +7,7 @@ pipeline {
 
     environment {
         SONAR_TOKEN = credentials('SONAR_TOKEN') // Reference Jenkins credential ID
+        SUDO_PASSWORD = credentials('SUDO_PASS_ID')
     }
 
     stages {
@@ -87,15 +88,26 @@ pipeline {
        //      }
        //  }
 
-        stage('Run Ansible Playbook') {
+        // stage('Run Ansible Playbook') {
+        //     steps {
+        //         script {
+        //             sh '''
+        //                 ansible-playbook ansible/deploy-container.yaml
+        //             '''
+        //         }
+        //     }
+        // }
+      
+        stage('Deploy Container') {
             steps {
                 script {
-                    sh '''
-                        ansible-playbook ansible/deploy-container.yaml
-                    '''
+                    withCredentials([string(credentialsId: 'sudo_password_id', variable: 'SUDO_PASSWORD')]) {
+                        sh 'ansible-playbook ansible/deploy-container.yaml --extra-vars "ansible_become_pass=$SUDO_PASSWORD"'
+                    }
                 }
             }
         }
+  
     }
 
     post {
