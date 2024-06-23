@@ -88,15 +88,7 @@ pipeline {
        //      }
        //  }
 
-        // stage('Run Ansible Playbook') {
-        //     steps {
-        //         script {
-        //             sh '''
-        //                 ansible-playbook ansible/deploy-container.yaml
-        //             '''
-        //         }
-        //     }
-        // }
+      
       
         stage('Deploy Container') {
             steps {
@@ -116,42 +108,5 @@ pipeline {
         }
     }
 }
-// pipeline {
-//     agent any
 
-//     stages {
-//         stage('Checkout') {
-//             steps {
-//                 checkout scm
-//             }
-//         }
 
-//         stage('Initialize Go Module') {
-//             steps {
-//                 script {
-//                     if (!fileExists('go.mod')) {
-//                         sh 'go mod init https://github.com/mohan2020coder/devops-golang'
-//                     }
-//                 }
-//             }
-//         }
-
-//         stage('Get Dependencies') {
-//             steps {
-//                 sh 'go get -u ./...'
-//             }
-//         }
-
-//         stage('Build') {
-//             steps {
-//                 sh 'go build -v ./...'
-//             }
-//         }
-
-//         stage('Test') {
-//             steps {
-//                 sh 'go test -v ./...'
-//             }
-//         }
-//     }
-// }
