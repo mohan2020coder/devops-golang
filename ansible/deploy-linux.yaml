@@ -1,6 +1,8 @@
 - name: Copy and Start Go on Linux Server
   hosts: webservers
   become: yes
+  vars_files:
+    - ~/.ansible_vault
   tasks:
     - name: Copy Go Binary
       copy:
